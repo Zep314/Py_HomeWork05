@@ -11,3 +11,25 @@
 # Это — 16-ричная система, поищите, как правильнее и быстрее получать эти символы. 
 # С помощью reduce сложите получившиеся числа и верните из функции в качестве ответа.
 
+alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+abc_cost = {alphabet[i]:i+65 for i in range(len(alphabet))}
+
+program_languages = ['Python','C','Fortran','Java','Go','PHP','Pascal','Basic','Lisp','Assembler','Prolog','Perl','Bash']
+my_numbers = list(range(1,len(program_languages)+1))
+
+# Вычисляем "стоимость" одного слова
+def CostWord(local_str): return sum([abc_cost[local_str[i]] for i in range(len(local_str))])
+
+# Функция 1 для задания
+def MyGetTuples(list1,list2): return [(list1[i],list2[i].upper()) for i in range(len(list1))]
+
+# Функция 2 для задания
+def MyFilter(local_list): return [list([CostWord(local_list[i][1]),local_list[i][1]]) \
+                                  for i in range(len(local_list)) \
+                                  if CostWord(local_list[i][1]) % local_list[i][0] == 0]
+
+#print(program_languages)
+#print(my_numbers)
+print(MyGetTuples(my_numbers,program_languages))
+print('===================')
+print(MyFilter(MyGetTuples(my_numbers,program_languages)))
