@@ -12,3 +12,13 @@
 
 # Отфильтруйте его, чтобы эту фигню можно было прочесть. 
 # Предусмотрите вариант, что мусорные слова могли быть написаны без использования запятых.
+
+local_field = '123XXXOO9'
+
+win_patterns = ((0,1,2),(3,4,5),(6,7,8),(0,3,6),(1,4,7),(2,5,8),(0,4,8),(2,4,6))
+
+s = list(filter(lambda x: x,[local_field[win_patterns[i][0]]+local_field[win_patterns[i][1]]+local_field[win_patterns[i][2]] for i in range(0,len(win_patterns))]))
+print(s)
+
+#print(len(win_patterns))
+
