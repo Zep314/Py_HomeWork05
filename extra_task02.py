@@ -17,17 +17,26 @@
 #  повторяющуюся последовательность цифр.
 
 import re
+from itertools import groupby
 
-def repeat_inside(text):
-    match = re.findall(r'(?=((.+?)\2+))', text)
-    #match = re.findall(r'((\w+)\2+)', text)
-    return max((x[0] for x in match), key=len, default='')
+def repeat_inside(text):  
+    return "".join(
+                    [ s for s, _ in groupby(
+                                            list(
+                                                max( [x[1] for x in re.findall(r'((\w+)\2+)', text)]
+                                                    , key=len
+                                                    , default='')
+                                                )
+                                           )
+                    ]
+                  )
 
 def MyFind(n):
-    f = 1/n
-    s = format(f,'.55f')
-    print(repeat_inside(s))
-    return s
+    ret = {len(repeat_inside(format(1/i,".55"))):i for i in range(2,n)}
 
-for i in range(7,8):
-    print(f'1/{i} = {MyFind(i)}')
+    return ret[max([key for key in ret.items()])[0]]
+
+findNUM = MyFind(1000)
+
+print(f'1/{findNUM} = {format(1/findNUM,".55")}, repeat = {repeat_inside(format(1/findNUM,".55"))}')
+
