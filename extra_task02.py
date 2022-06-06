@@ -16,27 +16,30 @@
 # Найдите значение d < 1000, для которого 1/d в десятичном виде содержит самую длинную
 #  повторяющуюся последовательность цифр.
 
+
+# Очень долго не удавалось решить
+# Только динамическим программированием решить не удалось. Пришлось использовать RegExp-ы
+# Наверняка можно с помощью ДП сделать, но пока не знаю как (((
 import re
 from itertools import groupby
 
-def repeat_inside(text):  
-    return "".join(
-                    [ s for s, _ in groupby(
-                                            list(
-                                                max( [x[1] for x in re.findall(r'((\w+)\2+)', text)]
-                                                    , key=len
-                                                    , default='')
-                                                )
-                                           )
-                    ]
-                  )
+def MyFindAll(text): # Ищем вхождения повторяющихся строк (возвращаяем повторяющуюся субстроку)
+#    ret = re.findall(r'((\w+)\2+)', text, flags=0)
+    ret = max(re.findall(r'((\w+)\2+)', text, flags=0), key= len, default='')
+    if ret== '': return ''
+    return ret[1]
 
-def MyFind(n):
-    ret = {len(repeat_inside(format(1/i,".55"))):i for i in range(2,n)}
+def RP3(text):  # Почему то re.findall не всегда выдает только повторяющуюся последовательность
+    tmp2 = text # потому - его приходится запускать несколько раз (чтобы он эту последовательность дочистил)
+    tmp1 = tmp2
+    while tmp2 != '':
+        tmp1 = tmp2
+        tmp2 = MyFindAll(tmp1)
+    return tmp1
 
+def MyFind(n): # Тут ищем последовательности с помощью словаря
+    ret = {len(RP3(format(1/i,".55"))):i for i in range(2,n)}
     return ret[max([key for key in ret.items()])[0]]
 
 findNUM = MyFind(1000)
-
-print(f'1/{findNUM} = {format(1/findNUM,".55")}, repeat = {repeat_inside(format(1/findNUM,".55"))}')
-
+print(f'1/{findNUM} = {format(1/findNUM,".55")}, repeat = {RP3(format(1/findNUM,".55"))}')
