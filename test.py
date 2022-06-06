@@ -2,19 +2,12 @@
 
 excess_nums = [12, 18, 20, 24, 30, 36, 40, 42, 48]
 
-limit_nums = 50
+import re
 
-ret1 = []
-for i in range(24,limit_nums):
-    for j in range(len(excess_nums)):
-        if not ((i - excess_nums[j]) in excess_nums):
-            ret1.append(i)
-            break
-print(len(ret1))
-print(ret1)
-
-ret = []
-
-ret = list(filter(lambda x: ,excess_nums))
-print(len(ret))
-print(ret)
+text = '0.001010101010101010100133978042435956012923270463943481445'
+#s = re.findall(r'((\d+)\2+)', text)
+s = re.findall(r'((\d+)\2+)', text)
+print(s)
+text = '10101010'
+s = re.findall(r'((\d+)\2+)', text)
+#print(s)
